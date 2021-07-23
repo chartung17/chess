@@ -28,7 +28,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private static final Color MOVE_COLOR = new Color(255, 255, 0, 200); // transparent yellow
 	private BufferedImage image = new BufferedImage(BOARD_SIZE + 2 * BORDER_SIZE, BOARD_SIZE + 2 * BORDER_SIZE,
 			BufferedImage.TYPE_INT_ARGB);
-	public static final Font PIECE_FONT = new Font(Font.MONOSPACED, Font.BOLD, 90);
+	public static final Font PIECE_FONT = new Font(Font.MONOSPACED, Font.BOLD, 60);
 	private byte[][] board = new byte[8][8];
 	private Mediator mediator;
 	private int[] selectedSquare = null;
@@ -128,42 +128,55 @@ public class BoardPanel extends JPanel implements MouseListener {
 				char piece = (char) board[i][j];
 				if (piece != '\0') {
 					String filename = "";
+					char pieceChar = '\0';
 					switch (piece) {
 					case 'Q':
 						filename = "blackQueen.png";
+						pieceChar = '\u265B';
 						break;
 					case 'R':
 						filename = "blackRook.png";
+						pieceChar = '\u265C';
 						break;
 					case 'P':
 						filename = "blackPawn.png";
+						pieceChar = '\u265F';
 						break;
 					case 'K':
 						filename = "blackKing.png";
+						pieceChar = '\u265A';
 						break;
 					case 'N':
 						filename = "blackKnight.png";
+						pieceChar = '\u265E';
 						break;
 					case 'B':
 						filename = "blackBishop.png";
+						pieceChar = '\u265F';
 						break;
 					case 'q':
 						filename = "whiteQueen.png";
+						pieceChar = '\u2655';
 						break;
 					case 'r':
 						filename = "whiteRook.png";
+						pieceChar = '\u2656';
 						break;
 					case 'p':
 						filename = "whitePawn.png";
+						pieceChar = '\u2659';
 						break;
 					case 'k':
 						filename = "whiteKing.png";
+						pieceChar = '\u2654';
 						break;
 					case 'n':
 						filename = "whiteKnight.png";
+						pieceChar = '\u2658';
 						break;
 					case 'b':
 						filename = "whiteBishop.png";
+						pieceChar = '\u2657';
 					}
 					try {
 						BufferedImage pieceImage = ImageIO.read(getClass().getResourceAsStream(filename));
@@ -171,8 +184,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 								60, 60, null);
 					} catch (IOException e) {
 						g.setColor(Character.isUpperCase(piece) ? Color.BLACK : Color.LIGHT_GRAY);
-						g.drawString("" + Character.toUpperCase(piece), SQUARE_SIZE * j + BORDER_SIZE + 10,
-								SQUARE_SIZE * (i + 1) + BORDER_SIZE - 10);
+//						g.drawString("" + Character.toUpperCase(piece), SQUARE_SIZE * j + BORDER_SIZE + 10,
+//								SQUARE_SIZE * (i + 1) + BORDER_SIZE - 10);
+						g.drawString("" + pieceChar, SQUARE_SIZE * j + BORDER_SIZE + 8,
+								SQUARE_SIZE * (i + 1) + BORDER_SIZE - 12);
 					}
 				}
 			}

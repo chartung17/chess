@@ -15,7 +15,7 @@
 	<description>Chess</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<start-class>ui.js.JavaScriptUserInterface</start-class>
+		<!-- <start-class>ui.js.JavaScriptUserInterface</start-class> -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,6 +39,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>ui.js.JavaScriptUserInterface</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,8 +1,10 @@
-package ui;
+package ui.js;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
+
+import ui.UserInterface;
 
 import javax.servlet.http.HttpSession;
 

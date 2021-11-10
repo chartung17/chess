@@ -8,8 +8,8 @@
 		<version>2.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>main</groupId>
-	<artifactId>chess</artifactId>
+	<groupId>ui</groupId>
+	<artifactId>js</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>chess</name>
 	<description>Chess</description>

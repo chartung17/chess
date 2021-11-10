@@ -63,6 +63,7 @@ public class GUI extends UserInterface {
 		board.drawBoard();
 		if (!handlingButton)
 			text.setMessage(messageLine1, messageLine2, isGameOver);
+		pane.repaint();
 	}
 
 	/**

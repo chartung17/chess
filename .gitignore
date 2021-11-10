@@ -2,3 +2,8 @@
 bin
 .classpath
 .project
+nbproject
+build
+build.xml
+*.log
+manifest.mf

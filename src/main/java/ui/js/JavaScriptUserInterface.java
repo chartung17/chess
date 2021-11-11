@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import ui.UserInterface;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -40,16 +42,27 @@ public class JavaScriptUserInterface extends UserInterface {
 			HttpSession session) {
 		JavaScriptUserInterface ui = getUI(session);
 		ui.mediator.handleSelectedSquare(row, col);
-		StringBuilder sb = new StringBuilder("\n");
-		for (int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				sb.append((char) ui.board[i][j]);
-				sb.append(' ');
+		StringBuilder boardStr = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				char c = ui.board[i][j] == 0 ? '0' : (char) ui.board[i][j];
+				boardStr.append(c);
 			}
-			sb.append('\n');
 		}
-		System.out.println(sb);
-		return "{\"status\":200,\"message\":\"success\"}";
+		StringBuilder movesStr = new StringBuilder();
+		for (int i = 0; i < 64; i++) {
+			movesStr.append('0');
+		}
+		if (ui.selectedSquare != null) {
+			List<int[]> moves = ui.mediator.getLegalMoves(ui.selectedSquare[0],
+					ui.selectedSquare[1]);
+			moves.add(new int[] { ui.selectedSquare[0], ui.selectedSquare[1] });
+			for (int[] move : moves) {
+				movesStr.setCharAt(8 * move[0] + move[1], 'X');
+			}
+		}
+		return "{\"status\":200,\"board\":\"" + boardStr.toString() + "\",\"moves\":\""
+				+ movesStr.toString() + "\"}";
 	}
 
 	public static void main(String[] args) {

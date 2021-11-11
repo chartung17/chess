@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+import chess.Board;
 import ui.UserInterface;
 
 import java.util.List;
@@ -41,7 +42,12 @@ public class JavaScriptUserInterface extends UserInterface {
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
 			HttpSession session) {
 		JavaScriptUserInterface ui = getUI(session);
-		ui.mediator.handleSelectedSquare(row, col);
+		int result = ui.mediator.handleSelectedSquare(row, col);
+		if ((result == Board.SELECT) || (result == Board.PROMOTE)) {
+			ui.selectedSquare = new int[] { row, col };
+		} else {
+			ui.selectedSquare = null;
+		}
 		StringBuilder boardStr = new StringBuilder();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {

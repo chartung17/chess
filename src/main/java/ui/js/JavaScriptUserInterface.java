@@ -87,7 +87,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	 * @param session    the current session
 	 * @return the state of the board after handling the button click
 	 */
-	@RequestMapping(value = "/button/{session:[\\\\d]+}/{buttontext}", method = RequestMethod.GET)
+	@RequestMapping(value = "/button/{session:[\\d]+}/{buttontext}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleButton(@PathVariable String buttontext, @PathVariable int session) {
 		return getUI(session).handleButton(buttontext);
@@ -200,7 +200,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	 * @param session the current session
 	 * @return the state of the board after handling the click
 	 */
-	@RequestMapping(value = "/square/{session:[\\d]+}/{row:[\\\\d]+}/{col:[\\\\d]+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/square/{session:[\\d]+}/{row:[\\d]+}/{col:[\\d]+}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
 			@PathVariable int session) {

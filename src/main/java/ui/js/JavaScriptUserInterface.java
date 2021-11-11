@@ -35,6 +35,13 @@ public class JavaScriptUserInterface extends UserInterface {
 		// do nothing
 	}
 
+	/**
+	 * This method returns the user interface associated with the given session. If the session does
+	 * not yet have an associated user interface, a new one is created and assigned to the session.
+	 * 
+	 * @param session the session to use
+	 * @return the user interface associated with the session
+	 */
 	private static JavaScriptUserInterface getUI(HttpSession session) {
 		JavaScriptUserInterface ui = (JavaScriptUserInterface) session.getAttribute("ui");
 		if (ui == null) {
@@ -44,6 +51,14 @@ public class JavaScriptUserInterface extends UserInterface {
 		return ui;
 	}
 
+	/**
+	 * This method handles a button click.
+	 * 
+	 * @param buttontext the label of the button, in lowercase letters, with spaces replaced by
+	 *                   underscores
+	 * @param session    the current session
+	 * @return the state of the board after handling the button click
+	 */
 	@RequestMapping(value = "/button/{buttontext}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleButton(@PathVariable String buttontext, HttpSession session) {
@@ -62,10 +77,17 @@ public class JavaScriptUserInterface extends UserInterface {
 		}
 	}
 
+	/**
+	 * This method handles a button click.
+	 * 
+	 * @param buttontext the label of the button, in lowercase letters, with spaces replaced by
+	 *                   underscores
+	 * @return the state of the board after handling the button click
+	 */
 	private String handleButton(String buttontext) {
 		String buttons = setButtonState();
 		switch (buttontext) {
-		case "draw":
+		case "offer_draw":
 			if (buttons != DEFAULT)
 				return ILLEGAL;
 			String currentPlayer = blackToMove ? "Black" : "White";
@@ -118,9 +140,9 @@ public class JavaScriptUserInterface extends UserInterface {
 			if (buttons != YES_NO)
 				return ILLEGAL;
 			handlingButton = false;
-			if (messageLine2.contains("resign")) 
+			if (messageLine2.contains("resign"))
 				mediator.handleSelectedOption(Mediator.RESIGN);
-			else 
+			else
 				mediator.handleSelectedOption(Mediator.DRAW);
 			break;
 		case "no":
@@ -130,7 +152,7 @@ public class JavaScriptUserInterface extends UserInterface {
 			messageLine1 = oldMessageLine1;
 			messageLine2 = oldMessageLine2;
 			break;
-		case "new":
+		case "play_again":
 			if (buttons != PLAY_AGAIN)
 				return ILLEGAL;
 			mediator.initializeGame();
@@ -142,6 +164,14 @@ public class JavaScriptUserInterface extends UserInterface {
 		return returnJson();
 	}
 
+	/**
+	 * This method handles a click on a board square.
+	 * 
+	 * @param row     the row of the square
+	 * @param col     the column of the square
+	 * @param session the current session
+	 * @return the state of the board after handling the click
+	 */
 	@RequestMapping(value = "/square/{row:[\\d]+}/{col:[\\d]+}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
@@ -157,7 +187,12 @@ public class JavaScriptUserInterface extends UserInterface {
 		}
 		return ui.returnJson();
 	}
-	
+
+	/**
+	 * This method returns a JSON-formatted string indicating the current board state.
+	 * 
+	 * @return a JSON-formatted string indicating the current board state
+	 */
 	private String returnJson() {
 		StringBuilder boardStr = new StringBuilder();
 		for (int i = 0; i < 8; i++) {
@@ -171,8 +206,7 @@ public class JavaScriptUserInterface extends UserInterface {
 			movesStr.append('0');
 		}
 		if (selectedSquare != null) {
-			List<int[]> moves = mediator.getLegalMoves(selectedSquare[0],
-					selectedSquare[1]);
+			List<int[]> moves = mediator.getLegalMoves(selectedSquare[0], selectedSquare[1]);
 			moves.add(new int[] { selectedSquare[0], selectedSquare[1] });
 			for (int[] move : moves) {
 				movesStr.setCharAt(8 * move[0] + move[1], 'X');
@@ -180,10 +214,15 @@ public class JavaScriptUserInterface extends UserInterface {
 		}
 		String buttons = setButtonState();
 		return "{\"status\":200,\"board\":\"" + boardStr.toString() + "\",\"moves\":\""
-				+ movesStr.toString() + "\",\"message1\":\"" + messageLine1
-				+ "\",\"message2\":\"" + messageLine2 + "\",\"buttons\":" + buttons + "}";
+				+ movesStr.toString() + "\",\"message1\":\"" + messageLine1 + "\",\"message2\":\""
+				+ messageLine2 + "\",\"buttons\":" + buttons + "}";
 	}
 
+	/**
+	 * This method runs the app.
+	 * 
+	 * @param args not used
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(JavaScriptUserInterface.class, args);
 	}

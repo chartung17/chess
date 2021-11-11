@@ -5,10 +5,9 @@ import chess.piece.King;
 import chess.piece.Pawn;
 
 /**
- * This class is used by the board class to check the validity of any move that
- * cannot be checked by the piece making the move, including checking whether
- * castling and en passant are legal and checking whether a given move would
- * result in the player's own king being in check.
+ * This class is used by the board class to check the validity of any move that cannot be checked by
+ * the piece making the move, including checking whether castling and en passant are legal and
+ * checking whether a given move would result in the player's own king being in check.
  */
 public class MoveValidator {
 	private ChessPiece[][] pieces;
@@ -33,8 +32,7 @@ public class MoveValidator {
 	 * 
 	 * @param piece   the piece to check
 	 * @param isBlack the color to check, true for black or false for white
-	 * @return true if the piece is a Pawn of the specified color and false
-	 *         otherwise
+	 * @return true if the piece is a Pawn of the specified color and false otherwise
 	 */
 	private boolean isPawn(ChessPiece piece, boolean isBlack) {
 		return (piece != null) && (piece instanceof Pawn) && (piece.isBlack() == isBlack);
@@ -44,10 +42,9 @@ public class MoveValidator {
 	 * This method checks whether en passant is legal.
 	 * 
 	 * @param enPassantPawn the pawn that can potentially be captured by en passant
-	 * @param board         an 8x8 matrix representing the current state of the
-	 *                      board, with empty squares represented by zeros and
-	 *                      occupied squares represented by the return value of the
-	 *                      occupying piece's toByte() method
+	 * @param board         an 8x8 matrix representing the current state of the board, with empty
+	 *                      squares represented by zeros and occupied squares represented by the
+	 *                      return value of the occupying piece's toByte() method
 	 * @return true if en passant is legal and false otherwise
 	 */
 	protected boolean isEnPassantLegal(Pawn enPassantPawn, byte[][] board) {
@@ -66,7 +63,8 @@ public class MoveValidator {
 		// return true if at least one of the two pieces can capture by en passant and
 		// false
 		// otherwise
-		return (isEnPassantLegal(enPassantPawn, piece1, board) || (isEnPassantLegal(enPassantPawn, piece2, board)));
+		return (isEnPassantLegal(enPassantPawn, piece1, board)
+				|| (isEnPassantLegal(enPassantPawn, piece2, board)));
 	}
 
 	/**
@@ -74,10 +72,9 @@ public class MoveValidator {
 	 * 
 	 * @param enPassantPawn the pawn that can potentially be captured by en passant
 	 * @param piece         the piece to check
-	 * @param board         an 8x8 matrix representing the current state of the
-	 *                      board, with empty squares represented by zeros and
-	 *                      occupied squares represented by the return value of the
-	 *                      occupying piece's toByte() method
+	 * @param board         an 8x8 matrix representing the current state of the board, with empty
+	 *                      squares represented by zeros and occupied squares represented by the
+	 *                      return value of the occupying piece's toByte() method
 	 * @return true if the piece can capture by en passant and false otherwise
 	 */
 	protected boolean isEnPassantLegal(Pawn enPassantPawn, ChessPiece piece, byte[][] board) {
@@ -113,20 +110,20 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method checks whether the given piece can legally capture by en passant
-	 * by moving to the specified location
+	 * This method checks whether the given piece can legally capture by en passant by moving to the
+	 * specified location
 	 * 
 	 * @param row           the row to check
 	 * @param col           the col to check
 	 * @param enPassantPawn the pawn that can potentially be captured by en passant
 	 * @param piece         the piece to check
-	 * @param board         an 8x8 matrix representing the current state of the
-	 *                      board, with empty squares represented by zeros and
-	 *                      occupied squares represented by the return value of the
-	 *                      occupying piece's toByte() method
+	 * @param board         an 8x8 matrix representing the current state of the board, with empty
+	 *                      squares represented by zeros and occupied squares represented by the
+	 *                      return value of the occupying piece's toByte() method
 	 * @return true if the piece can capture by en passant and false otherwise
 	 */
-	protected boolean isEnPassantLegal(int row, int col, Pawn enPassantPawn, ChessPiece piece, byte[][] board) {
+	protected boolean isEnPassantLegal(int row, int col, Pawn enPassantPawn, ChessPiece piece,
+			byte[][] board) {
 		// if the last move was not a pawn moving two spaces, return false
 		if (enPassantPawn == null)
 			return false;
@@ -134,7 +131,8 @@ public class MoveValidator {
 		// if the given location is the wrong square for an en passant capture of the
 		// pawn that just
 		// moved, return false
-		if ((row != enPassantPawn.getRow() + (enPassantPawn.isBlack() ? -1 : 1)) || (col != enPassantPawn.getCol()))
+		if ((row != enPassantPawn.getRow() + (enPassantPawn.isBlack() ? -1 : 1))
+				|| (col != enPassantPawn.getCol()))
 			return false;
 
 		// if the given location is correct, check whether the given piece can legally
@@ -144,21 +142,20 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method checks whether moving the given piece to the specified location
-	 * would result in the player's own king being in check.
+	 * This method checks whether moving the given piece to the specified location would result in
+	 * the player's own king being in check.
 	 * 
 	 * @param row         the row to move to
 	 * @param col         the col to move to
 	 * @param blackToMove true if it is black's turn and false if white's turn
 	 * @param piece       the piece being moved
-	 * @param board       an 8x8 matrix representing the current state of the board,
-	 *                    with empty squares represented by zeros and occupied
-	 *                    squares represented by the return value of the occupying
-	 *                    piece's toByte() method
-	 * @return true if the move results in the player's own king being in check and
-	 *         false otherwise
+	 * @param board       an 8x8 matrix representing the current state of the board, with empty
+	 *                    squares represented by zeros and occupied squares represented by the
+	 *                    return value of the occupying piece's toByte() method
+	 * @return true if the move results in the player's own king being in check and false otherwise
 	 */
-	protected boolean doesMoveEndInCheck(int row, int col, boolean blackToMove, ChessPiece piece, byte[][] board) {
+	protected boolean doesMoveEndInCheck(int row, int col, boolean blackToMove, ChessPiece piece,
+			byte[][] board) {
 		int startRow = piece.getRow();
 		int startCol = piece.getCol();
 		board[row][col] = board[startRow][startCol];
@@ -176,14 +173,13 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method checks whether the king of the specified color is in check in the
-	 * given board setup.
+	 * This method checks whether the king of the specified color is in check in the given board
+	 * setup.
 	 * 
 	 * @param isBlackKing true if the king is black and false if white
-	 * @param board       an 8x8 matrix representing the current state of the board,
-	 *                    with empty squares represented by zeros and occupied
-	 *                    squares represented by the return value of the occupying
-	 *                    piece's toByte() method
+	 * @param board       an 8x8 matrix representing the current state of the board, with empty
+	 *                    squares represented by zeros and occupied squares represented by the
+	 *                    return value of the occupying piece's toByte() method
 	 * @return true if the king is in check and false if not
 	 */
 	protected boolean isCheck(boolean blackToMove, byte[][] board) {
@@ -192,16 +188,15 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method checks whether the king of the specified color at the specified
-	 * location is in check in the given board setup.
+	 * This method checks whether the king of the specified color at the specified location is in
+	 * check in the given board setup.
 	 * 
 	 * @param kingRow     the row at which the king is located
 	 * @param kingCol     the col at which the king is located
 	 * @param isBlackKing true if the king is black and false if white
-	 * @param board       an 8x8 matrix representing the current state of the board,
-	 *                    with empty squares represented by zeros and occupied
-	 *                    squares represented by the return value of the occupying
-	 *                    piece's toByte() method
+	 * @param board       an 8x8 matrix representing the current state of the board, with empty
+	 *                    squares represented by zeros and occupied squares represented by the
+	 *                    return value of the occupying piece's toByte() method
 	 * @return true if the king is in check and false if not
 	 */
 	protected boolean isCheck(int kingRow, int kingCol, boolean isBlackKing, byte[][] board) {
@@ -217,7 +212,8 @@ public class MoveValidator {
 			return true;
 
 		// check if the king's square is reachable by a knight
-		int[][] deltas = { { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 }, { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 } };
+		int[][] deltas = { { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 }, { 2, 1 }, { 2, -1 },
+				{ -2, 1 }, { -2, -1 } };
 		for (int[] delta : deltas) {
 			piece = pieceAt(kingRow + delta[0], kingCol + delta[1], board);
 			if (matches(piece, 'n', !isBlackKing))
@@ -239,7 +235,8 @@ public class MoveValidator {
 		int[][] rookDirections = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 		for (int[] rookDirection : rookDirections) {
 			for (int i = 1; i < 8; i++) {
-				piece = pieceAt(kingRow + (i * rookDirection[0]), kingCol + (i * rookDirection[1]), board);
+				piece = pieceAt(kingRow + (i * rookDirection[0]), kingCol + (i * rookDirection[1]),
+						board);
 				if ((matches(piece, 'r', !isBlackKing)) || matches(piece, 'q', !isBlackKing))
 					return true;
 				if (piece != 0)
@@ -252,7 +249,8 @@ public class MoveValidator {
 		int[][] bishopDirections = { { 1, 1 }, { 1, -1 }, { -1, 1 }, { -1, -1 } };
 		for (int[] bishopDirection : bishopDirections) {
 			for (int i = 1; i < 8; i++) {
-				piece = pieceAt(kingRow + (i * bishopDirection[0]), kingCol + (i * bishopDirection[1]), board);
+				piece = pieceAt(kingRow + (i * bishopDirection[0]),
+						kingCol + (i * bishopDirection[1]), board);
 				if ((matches(piece, 'b', !isBlackKing)) || matches(piece, 'q', !isBlackKing))
 					return true;
 				if (piece != 0)
@@ -265,8 +263,8 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method determines whether the specified piece is a piece of the
-	 * specified type and color.
+	 * This method determines whether the specified piece is a piece of the specified type and
+	 * color.
 	 * 
 	 * @param piece     the piece to check
 	 * @param pieceType the piece type to check
@@ -284,16 +282,14 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method returns the char representing the piece at the given location in
-	 * the given board, or the null char if the specified location is outside of the
-	 * bounds of the board
+	 * This method returns the char representing the piece at the given location in the given board,
+	 * or the null char if the specified location is outside of the bounds of the board
 	 * 
 	 * @param row   the row to check
 	 * @param col   the col to check
 	 * @param board the board to check
-	 * @return the char representing the piece at the given location in the given
-	 *         board, or the null char if the specified location is outside of the
-	 *         bounds of the board
+	 * @return the char representing the piece at the given location in the given board, or the null
+	 *         char if the specified location is outside of the bounds of the board
 	 */
 	private char pieceAt(int row, int col, byte[][] board) {
 		if ((row >= 0) && (row < 8) && (col >= 0) && (col < 8)) {
@@ -303,18 +299,15 @@ public class MoveValidator {
 	}
 
 	/**
-	 * This method checks whether the specified king can castle on the specified
-	 * side
+	 * This method checks whether the specified king can castle on the specified side
 	 * 
 	 * @param king        the king to check
-	 * @param side        the side to which the king is moving, either 'q' for
-	 *                    queenside or 'k' for kingside
-	 * @param blackToMove true if it is black's turn to move and false if it is
-	 *                    white's turn
-	 * @param board       an 8x8 matrix representing the current state of the board,
-	 *                    with empty squares represented by zeros and occupied
-	 *                    squares represented by the return value of the occupying
-	 *                    piece's toByte() method
+	 * @param side        the side to which the king is moving, either 'q' for queenside or 'k' for
+	 *                    kingside
+	 * @param blackToMove true if it is black's turn to move and false if it is white's turn
+	 * @param board       an 8x8 matrix representing the current state of the board, with empty
+	 *                    squares represented by zeros and occupied squares represented by the
+	 *                    return value of the occupying piece's toByte() method
 	 * @return 1 if successful or 0 if unsuccessful
 	 */
 	protected boolean isCastleLegal(King king, char side, boolean blackToMove, byte[][] board) {

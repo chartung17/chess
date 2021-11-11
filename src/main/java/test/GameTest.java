@@ -25,8 +25,7 @@ class GameTest {
 	}
 
 	/**
-	 * This method executes a move specified by the names of the start and stop
-	 * squares
+	 * This method executes a move specified by the names of the start and stop squares
 	 * 
 	 * @param start the name of the square where the piece starts
 	 * @param stop  the name of the square where the piece stops
@@ -43,9 +42,8 @@ class GameTest {
 	}
 
 	/**
-	 * This method executes a series of move that result in a white pawn in square
-	 * a8 ready to be promoted and verifies that control switches properly between
-	 * the players
+	 * This method executes a series of move that result in a white pawn in square a8 ready to be
+	 * promoted and verifies that control switches properly between the players
 	 */
 	void promoteWhitePawn() {
 		assertFalse(ui.blackToMove());
@@ -72,8 +70,8 @@ class GameTest {
 	}
 
 	/**
-	 * This method executes a series of move that result in a black pawn in square
-	 * a1 ready to be promoted
+	 * This method executes a series of move that result in a black pawn in square a1 ready to be
+	 * promoted
 	 */
 	void promoteBlackPawn() {
 		move("f2", "f4");

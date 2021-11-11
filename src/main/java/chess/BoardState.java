@@ -3,8 +3,7 @@ package chess;
 import java.util.Map;
 
 /**
- * This class contains all board state information needed by the threefold
- * repetition rule
+ * This class contains all board state information needed by the threefold repetition rule
  */
 public class BoardState implements Comparable<BoardState> {
 	// since a large number of BoardState objects may exist simultaneously, instance
@@ -30,21 +29,17 @@ public class BoardState implements Comparable<BoardState> {
 	 * This method creates a BoardState object with the specified parameters.
 	 * 
 	 * @param board                   an 8x8 matrix representing the board
-	 * @param blackToMove             true if it is black's turn to move and false
-	 *                                if it is white's turn
-	 * @param isEnPassantLegal        true if en passant is legal and false
-	 *                                otherwise
-	 * @param canBlackCastleKingside  true if black can castle kingside and false
-	 *                                otherwise
-	 * @param canBlackCastleQueenside true if black can castle queenside and false
-	 *                                otherwise
-	 * @param canWhiteCastleKingside  true if white can castle kingside and false
-	 *                                otherwise
-	 * @param canWhiteCastleQueenside true if white can castle queenside and false
-	 *                                otherwise
+	 * @param blackToMove             true if it is black's turn to move and false if it is white's
+	 *                                turn
+	 * @param isEnPassantLegal        true if en passant is legal and false otherwise
+	 * @param canBlackCastleKingside  true if black can castle kingside and false otherwise
+	 * @param canBlackCastleQueenside true if black can castle queenside and false otherwise
+	 * @param canWhiteCastleKingside  true if white can castle kingside and false otherwise
+	 * @param canWhiteCastleQueenside true if white can castle queenside and false otherwise
 	 */
-	public BoardState(byte[][] board, boolean blackToMove, boolean isEnPassantLegal, boolean canBlackCastleKingside,
-			boolean canBlackCastleQueenside, boolean canWhiteCastleKingside, boolean canWhiteCastleQueenside) {
+	public BoardState(byte[][] board, boolean blackToMove, boolean isEnPassantLegal,
+			boolean canBlackCastleKingside, boolean canBlackCastleQueenside,
+			boolean canWhiteCastleKingside, boolean canWhiteCastleQueenside) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				rows[i] |= ((((long) board[i][j]) & 0b1111_1111) << (8 * (7 - j)));
@@ -73,12 +68,12 @@ public class BoardState implements Comparable<BoardState> {
 	}
 
 	/**
-	 * This method adds this BoardState to the given Map. If the BoardState was
-	 * already in the map, its count is incremented by 1, otherwise its count is set
-	 * to 1. The count of this BoardState is then returned.
+	 * This method adds this BoardState to the given Map. If the BoardState was already in the map,
+	 * its count is incremented by 1, otherwise its count is set to 1. The count of this BoardState
+	 * is then returned.
 	 * 
-	 * @param map a Map which maps BoardState objects to the number of times those
-	 *            BoardState objects have appeared
+	 * @param map a Map which maps BoardState objects to the number of times those BoardState
+	 *            objects have appeared
 	 * @return the count of this BoardState in the given map after insertion
 	 */
 	public int insertInto(Map<BoardState, Integer> map) {

@@ -14,14 +14,13 @@ public class GameData {
 	 * @param messageLine1 the first line of the message displayed to the user
 	 * @param messageLine2 the second line of the message displayed to the user
 	 * @param board        an 8x8 matrix representing the current state of the board
-	 * @param isPromotion  true if a pawn is being promoted and the user needs to
-	 *                     select which piece to promote it to or false otherwise
-	 * @param blackToMove  true is it is black's turn to move and false if it is
-	 *                     white's turn
+	 * @param isPromotion  true if a pawn is being promoted and the user needs to select which piece
+	 *                     to promote it to or false otherwise
+	 * @param blackToMove  true is it is black's turn to move and false if it is white's turn
 	 * @param isGameOver   true if the game is over and false otherwise
 	 */
-	public GameData(String messageLine1, String messageLine2, byte[][] board, boolean isPromotion, boolean blackToMove,
-			boolean isGameOver) {
+	public GameData(String messageLine1, String messageLine2, byte[][] board, boolean isPromotion,
+			boolean blackToMove, boolean isGameOver) {
 		this.messageLine1 = messageLine1;
 		this.messageLine2 = messageLine2;
 		this.board = board;

@@ -46,8 +46,7 @@ public abstract class UserInterface {
 	}
 
 	/**
-	 * This method updates the user interface's internal representation of the
-	 * board.
+	 * This method updates the user interface's internal representation of the board.
 	 * 
 	 * @param board the current state of the board
 	 */

@@ -29,8 +29,7 @@ public class Board {
 	public static final int PAWN_MOVE = 5;
 
 	/**
-	 * This method initializes a chessboard with all pieces in their normal starting
-	 * positions.
+	 * This method initializes a chessboard with all pieces in their normal starting positions.
 	 */
 	public Board() {
 		// initialize empty board
@@ -103,9 +102,9 @@ public class Board {
 	}
 
 	/**
-	 * This method returns an 8x8 matrix representing the current state of the
-	 * board. Empty squares are represented by zeros, and occupied squares are
-	 * represented by the return value of the occupying piece's toByte() method.
+	 * This method returns an 8x8 matrix representing the current state of the board. Empty squares
+	 * are represented by zeros, and occupied squares are represented by the return value of the
+	 * occupying piece's toByte() method.
 	 * 
 	 * @return an 8x8 matrix representing the current state of the board
 	 */
@@ -127,10 +126,9 @@ public class Board {
 	}
 
 	/**
-	 * If there is a piece at the specified location, this method removes it from
-	 * the sets of remaining pieces. If the captured piece is a rook at its starting
-	 * position, this method also indicates that the king cannot castle on the side
-	 * of that rook.
+	 * If there is a piece at the specified location, this method removes it from the sets of
+	 * remaining pieces. If the captured piece is a rook at its starting position, this method also
+	 * indicates that the king cannot castle on the side of that rook.
 	 * 
 	 * @param row the row of the captured piece
 	 * @param col the col of the captured piece
@@ -154,13 +152,11 @@ public class Board {
 	 * 
 	 * @param row         the row of the selected square
 	 * @param col         the col of the selected square
-	 * @param blackToMove true if it is black's turn to move and false if it is
-	 *                    white's turn
-	 * @return one of the following constants: SELECT for successfully selecting a
-	 *         piece, PROMOTE for a successful move resulting in a pawn needing to
-	 *         be promoted, CAPTURE for a move resulting in a piece being captured,
-	 *         PAWN_MOVE for any other successful move of a pawn, MOVE for any other
-	 *         successful move, or FAILURE if unsuccessful
+	 * @param blackToMove true if it is black's turn to move and false if it is white's turn
+	 * @return one of the following constants: SELECT for successfully selecting a piece, PROMOTE
+	 *         for a successful move resulting in a pawn needing to be promoted, CAPTURE for a move
+	 *         resulting in a piece being captured, PAWN_MOVE for any other successful move of a
+	 *         pawn, MOVE for any other successful move, or FAILURE if unsuccessful
 	 */
 	public int handleSelectedSquare(int row, int col, boolean blackToMove) {
 		// if a piece has already been selected, attempt to move the selected piece to
@@ -249,14 +245,13 @@ public class Board {
 	}
 
 	/**
-	 * This method returns a String representing the type of chess piece at the
-	 * selected square, or null if the square is empty.
+	 * This method returns a String representing the type of chess piece at the selected square, or
+	 * null if the square is empty.
 	 * 
 	 * @param row the row of the selected square
 	 * @param col the col of the selected square
-	 * @return "King", "Queen", "Rook", "Knight", "Bishop", or "Pawn", depending on
-	 *         the type of the chess piece at the selected square, or null if the
-	 *         square is empty
+	 * @return "King", "Queen", "Rook", "Knight", "Bishop", or "Pawn", depending on the type of the
+	 *         chess piece at the selected square, or null if the square is empty
 	 */
 	public String getPieceType(int row, int col) {
 		ChessPiece piece = pieces[row][col];
@@ -266,15 +261,13 @@ public class Board {
 	}
 
 	/**
-	 * This method returns a two-character String identifying the selected square.
-	 * The first character is a lowercase letter between 'a' (left) and 'h' (right)
-	 * identifying the column, and the second character is a digit between '1'
-	 * (bottom) and '8' (top) identifying the row.
+	 * This method returns a two-character String identifying the selected square. The first
+	 * character is a lowercase letter between 'a' (left) and 'h' (right) identifying the column,
+	 * and the second character is a digit between '1' (bottom) and '8' (top) identifying the row.
 	 * 
 	 * @param row the row of the selected square
 	 * @param col the col of the selected square
-	 * @return a two-character String identifying the column and row of the selected
-	 *         square
+	 * @return a two-character String identifying the column and row of the selected square
 	 */
 	public String getSquareName(int row, int col) {
 		char colChar = (char) (97 + col);
@@ -283,8 +276,8 @@ public class Board {
 	}
 
 	/**
-	 * This method moves the selected piece from the given current position to the
-	 * given new position, and unselects.
+	 * This method moves the selected piece from the given current position to the given new
+	 * position, and unselects.
 	 * 
 	 * @param currentRow the row to move from
 	 * @param currentCol the col to move from
@@ -299,11 +292,9 @@ public class Board {
 	}
 
 	/**
-	 * This method promotes the selected piece to the given piece type and then
-	 * unselects the piece.
+	 * This method promotes the selected piece to the given piece type and then unselects the piece.
 	 * 
-	 * @param pieceType 'q' for Queen, 'r' for Rook, 'n' for Knight, or 'b' for
-	 *                  Bishop
+	 * @param pieceType 'q' for Queen, 'r' for Rook, 'n' for Knight, or 'b' for Bishop
 	 */
 	public void promote(char pieceType) {
 		int row = selectedPiece.getRow();
@@ -334,11 +325,10 @@ public class Board {
 	}
 
 	/**
-	 * This method checks whether the king of the specified color is in check in the
-	 * current board setup.
+	 * This method checks whether the king of the specified color is in check in the current board
+	 * setup.
 	 * 
-	 * @param blackToMove true if it is black's turn to move and false if white's
-	 *                    turn
+	 * @param blackToMove true if it is black's turn to move and false if white's turn
 	 * @return true if the king is in check and false if not
 	 */
 	public boolean isCheck(boolean blackToMove) {
@@ -347,9 +337,8 @@ public class Board {
 	}
 
 	/**
-	 * This method attempts to castle by moving the king of the specified color to
-	 * the specified location and returns MOVE if successful or FAILURE if
-	 * unsuccessful.
+	 * This method attempts to castle by moving the king of the specified color to the specified
+	 * location and returns MOVE if successful or FAILURE if unsuccessful.
 	 * 
 	 * @param row         the row to move to
 	 * @param col         the col to move to
@@ -377,15 +366,13 @@ public class Board {
 	}
 
 	/**
-	 * This method attempts to castle the specified king on the specified side ('q'
-	 * for queenside or 'k' for kingside) and returns MOVE if successful or FAILURE
-	 * if unsuccessful.
+	 * This method attempts to castle the specified king on the specified side ('q' for queenside or
+	 * 'k' for kingside) and returns MOVE if successful or FAILURE if unsuccessful.
 	 * 
 	 * @param king        the king to move
-	 * @param side        the side to which the king is moving, either 'q' for
-	 *                    queenside or 'k' for kingside
-	 * @param blackToMove true if it is black's turn to move and false if it is
-	 *                    white's turn
+	 * @param side        the side to which the king is moving, either 'q' for queenside or 'k' for
+	 *                    kingside
+	 * @param blackToMove true if it is black's turn to move and false if it is white's turn
 	 * @return MOVE if successful or FAILURE if unsuccessful
 	 */
 	private int castle(King king, char side, boolean blackToMove) {
@@ -422,9 +409,8 @@ public class Board {
 	}
 
 	/**
-	 * This method attempts to capture en passant by moving the selected piece to
-	 * the given location and returns CAPTURE if successful or FAILURE if
-	 * unsuccessful
+	 * This method attempts to capture en passant by moving the selected piece to the given location
+	 * and returns CAPTURE if successful or FAILURE if unsuccessful
 	 * 
 	 * @param row the row to move to
 	 * @param col the col to move to
@@ -448,10 +434,8 @@ public class Board {
 	/**
 	 * This method checks whether the current player has any legal moves.
 	 * 
-	 * @param blackToMove true if it is black's turn to move and false if it is
-	 *                    white's turn
-	 * @return true if the current player has at least one legal move and false
-	 *         otherwise
+	 * @param blackToMove true if it is black's turn to move and false if it is white's turn
+	 * @return true if the current player has at least one legal move and false otherwise
 	 */
 	public boolean anyLegalMoves(boolean blackToMove) {
 		HashSet<ChessPiece> pieces = blackToMove ? blackPieces : whitePieces;
@@ -468,20 +452,17 @@ public class Board {
 	}
 
 	/**
-	 * This method returns a list of moves the piece at the specified location can
-	 * legally make; if the specified location is empty or if the piece is not the
-	 * current player's color, this method returns an empty list. Each move is
-	 * represented as a two-element array, where the first element indicates the row
-	 * and the second element indicates the col of the piece's position at the end
-	 * of the move.
+	 * This method returns a list of moves the piece at the specified location can legally make; if
+	 * the specified location is empty or if the piece is not the current player's color, this
+	 * method returns an empty list. Each move is represented as a two-element array, where the
+	 * first element indicates the row and the second element indicates the col of the piece's
+	 * position at the end of the move.
 	 * 
 	 * @param row         the row of the selected piece
 	 * @param col         the col of the selected piece
-	 * @param blackToMove true if it is black's turn to move and false if it is
-	 *                    white's turn
-	 * @return a list of legal moves, each represented as a two-element array
-	 *         containing the row and col of the piece's position at the end of the
-	 *         move
+	 * @param blackToMove true if it is black's turn to move and false if it is white's turn
+	 * @return a list of legal moves, each represented as a two-element array containing the row and
+	 *         col of the piece's position at the end of the move
 	 */
 	public List<int[]> getLegalMoves(int row, int col, boolean blackToMove) {
 		ChessPiece piece = pieces[row][col];
@@ -501,13 +482,15 @@ public class Board {
 		// the new list
 		List<int[]> newMoves = new ArrayList<>();
 		for (int[] move : oldMoves) {
-			if (!validator.doesMoveEndInCheck(move[0], move[1], blackToMove, piece, toByteArray())) {
+			if (!validator.doesMoveEndInCheck(move[0], move[1], blackToMove, piece,
+					toByteArray())) {
 				newMoves.add(move);
 			}
 		}
 
 		// if en passant or castling is legal, add it to the list
-		if ((piece instanceof Pawn) && (validator.isEnPassantLegal(enPassantPawn, piece, toByteArray()))) {
+		if ((piece instanceof Pawn)
+				&& (validator.isEnPassantLegal(enPassantPawn, piece, toByteArray()))) {
 			int direction = blackToMove ? 1 : -1;
 			newMoves.add(new int[] { enPassantPawn.getRow() + direction, enPassantPawn.getCol() });
 		} else if (piece instanceof King) {
@@ -526,13 +509,13 @@ public class Board {
 	/**
 	 * This method returns a BoardState object representing the current board state.
 	 * 
-	 * @param blackToMove true if it is black's turn to move and false if it is
-	 *                    white's turn
+	 * @param blackToMove true if it is black's turn to move and false if it is white's turn
 	 * @return a BoardState object representing the current board state
 	 */
 	public BoardState getBoardState(boolean blackToMove) {
 		boolean isEnPassantLegal = validator.isEnPassantLegal(enPassantPawn, toByteArray());
-		return new BoardState(toByteArray(), blackToMove, isEnPassantLegal, blackKing.canCastleKingside(),
-				blackKing.canCastleQueenside(), whiteKing.canCastleKingside(), whiteKing.canCastleQueenside());
+		return new BoardState(toByteArray(), blackToMove, isEnPassantLegal,
+				blackKing.canCastleKingside(), blackKing.canCastleQueenside(),
+				whiteKing.canCastleKingside(), whiteKing.canCastleQueenside());
 	}
 }

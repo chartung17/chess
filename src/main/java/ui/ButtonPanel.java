@@ -16,7 +16,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	}
 
 	private static final long serialVersionUID = 1L;
-	private JButton resignButton, drawButton, yesButton, noButton, queenButton, rookButton, knightButton, bishopButton;
+	private JButton resignButton, drawButton, yesButton, noButton, queenButton, rookButton,
+			knightButton, bishopButton;
 	private Mediator mediator;
 	private boolean isGameOver, isResign, isDraw;
 
@@ -52,8 +53,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method updates the state of the button panel, determining which buttons
-	 * are displayed and what effect pressing those buttons will have.
+	 * This method updates the state of the button panel, determining which buttons are displayed
+	 * and what effect pressing those buttons will have.
 	 * 
 	 * @param state      the new state
 	 * @param isGameOver true if the game is over and false otherwise

@@ -24,7 +24,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	protected void display() {
 		// do nothing
 	}
-	
+
 	private static JavaScriptUserInterface getUI(HttpSession session) {
 		JavaScriptUserInterface ui = (JavaScriptUserInterface) session.getAttribute("ui");
 		if (ui == null) {

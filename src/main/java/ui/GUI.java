@@ -31,7 +31,8 @@ public class GUI extends UserInterface {
 		sidePanel.add(text);
 		sidePanel.add(buttons);
 		sidePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		frame.setSize(BoardPanel.BOARD_SIZE + MessageArea.MESSAGE_WIDTH + 2 * BoardPanel.BORDER_SIZE + 50,
+		frame.setSize(
+				BoardPanel.BOARD_SIZE + MessageArea.MESSAGE_WIDTH + 2 * BoardPanel.BORDER_SIZE + 50,
 				BoardPanel.BOARD_SIZE + 2 * BoardPanel.BORDER_SIZE + 50);
 		pane.setBackground(BACKGROUND_COLOR);
 		sidePanel.setBackground(BACKGROUND_COLOR);
@@ -67,12 +68,11 @@ public class GUI extends UserInterface {
 	}
 
 	/**
-	 * This method is run when the user selects an option that can be handled by the
-	 * GUI.
+	 * This method is run when the user selects an option that can be handled by the GUI.
 	 * 
-	 * @param option an integer indicating which option the user selected, either
-	 *               one of the Mediator constants or a negative number to indicate
-	 *               that option handling is complete
+	 * @param option an integer indicating which option the user selected, either one of the
+	 *               Mediator constants or a negative number to indicate that option handling is
+	 *               complete
 	 */
 	public void handleButton(int option) {
 		switch (option) {
@@ -82,15 +82,16 @@ public class GUI extends UserInterface {
 			handlingButton = true;
 			board.setHandlingButton(handlingButton);
 			setButtonState();
-			text.setMessage("",
-					currentPlayer + " has offered to end the game in a draw. " + otherPlayer + ", do you accept?",
-					isGameOver);
+			text.setMessage("", currentPlayer + " has offered to end the game in a draw. "
+					+ otherPlayer + ", do you accept?", isGameOver);
 			break;
 		case Mediator.RESIGN:
 			handlingButton = true;
 			board.setHandlingButton(handlingButton);
 			setButtonState();
-			text.setMessage("", (blackToMove ? "Black" : "White") + ", are you sure you want to resign?", isGameOver);
+			text.setMessage("",
+					(blackToMove ? "Black" : "White") + ", are you sure you want to resign?",
+					isGameOver);
 			break;
 		case Mediator.QUEEN:
 		case Mediator.ROOK:

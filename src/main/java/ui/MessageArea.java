@@ -33,7 +33,8 @@ public class MessageArea extends JTextArea {
 	 * @param isGameOver   true if the game is over and false otherwise
 	 */
 	public void setMessage(String messageLine1, String messageLine2, boolean isGameOver) {
-		String message = (messageLine1.length() == 0) ? messageLine2 : messageLine1 + '\n' + messageLine2;
+		String message = (messageLine1.length() == 0) ? messageLine2
+				: messageLine1 + '\n' + messageLine2;
 		if (isGameOver) {
 			message += "\n\nWould you like to play again?";
 		}

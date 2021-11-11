@@ -52,19 +52,22 @@ public class Game extends AbstractGame {
 			if (board.getBoardState(blackToMove).insertInto(boardStates) >= 3)
 				gameOverByThreefoldRepetition = true;
 			if (!gameOver())
-				mediator.updateUI(generateData((blackToMove ? "Black" : "White") + ", please select a piece to move."));
+				mediator.updateUI(generateData(
+						(blackToMove ? "Black" : "White") + ", please select a piece to move."));
 			break;
 		case Board.SELECT:
 			String pieceType = board.getPieceType(row, col);
 			String squareName = board.getSquareName(row, col);
-			mediator.updateUI(generateData("You selected the " + pieceType + " on square " + squareName,
+			mediator.updateUI(generateData(
+					"You selected the " + pieceType + " on square " + squareName,
 					(blackToMove ? "Black" : "White") + ", please select a square to move to."));
 			break;
 		case Board.PROMOTE:
 			moveCount = 0;
 			isPromotion = true;
 			mediator.updateUI(generateData("Congratulations! Your pawn is being promoted.",
-					(blackToMove ? "Black" : "White") + ", please select a piece to promote your pawn to."));
+					(blackToMove ? "Black" : "White")
+							+ ", please select a piece to promote your pawn to."));
 		}
 		return result;
 	}
@@ -87,7 +90,8 @@ public class Game extends AbstractGame {
 				optionChar = 'b';
 				break;
 			default:
-				mediator.updateUI(generateData("Error: invalid selection. Please try again.", null));
+				mediator.updateUI(
+						generateData("Error: invalid selection. Please try again.", null));
 				return;
 			}
 			board.promote(optionChar);
@@ -96,18 +100,21 @@ public class Game extends AbstractGame {
 				gameOverByThreefoldRepetition = true;
 			isPromotion = false;
 			if (!gameOver())
-				mediator.updateUI(generateData((blackToMove ? "Black" : "White") + ", please select a piece to move."));
+				mediator.updateUI(generateData(
+						(blackToMove ? "Black" : "White") + ", please select a piece to move."));
 		} else {
 			switch (option) {
 			case Mediator.DRAW:
-				mediator.updateUI(generateData("Game Over!", "The game ended in a draw.", false, true));
+				mediator.updateUI(
+						generateData("Game Over!", "The game ended in a draw.", false, true));
 				break;
 			case Mediator.RESIGN:
-				mediator.updateUI(
-						generateData("Game Over!", (blackToMove ? "Black" : "White") + " has resigned.", false, true));
+				mediator.updateUI(generateData("Game Over!",
+						(blackToMove ? "Black" : "White") + " has resigned.", false, true));
 				break;
 			default:
-				mediator.updateUI(generateData("Error: the selected option is not yet supported.", null));
+				mediator.updateUI(
+						generateData("Error: the selected option is not yet supported.", null));
 			}
 		}
 	}
@@ -118,9 +125,9 @@ public class Game extends AbstractGame {
 	}
 
 	/**
-	 * This method checks whether the game has ended by checkmate, stalemate, or a
-	 * forced draw. Then, if the game is over, this method updates the UserInterface
-	 * and returns true, otherwise it returns false
+	 * This method checks whether the game has ended by checkmate, stalemate, or a forced draw.
+	 * Then, if the game is over, this method updates the UserInterface and returns true, otherwise
+	 * it returns false
 	 * 
 	 * @return true if the game is over and false otherwise
 	 */

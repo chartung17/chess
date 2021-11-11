@@ -20,8 +20,9 @@ public class TextUI extends UserInterface {
 	// messages for user
 	private final String optionsPrompt = "Please enter your next move. To view all options, enter \"help\".";
 	private final String optionsList = "\n\nTo select a square on the chessboard, enter its column letter followed \n"
-			+ "by its row number, with no spaces.\n\n" + "You may also enter any of the following commands:\n"
-			+ "board     Show the board\n" + "details   View details on how the board is displayed\n"
+			+ "by its row number, with no spaces.\n\n"
+			+ "You may also enter any of the following commands:\n" + "board     Show the board\n"
+			+ "details   View details on how the board is displayed\n"
 			+ "draw      Offer to end the game in a draw\n" + "resign    Resign the game\n";
 	private final String promotionOptions = "Enter \"queen\", \"rook\", \"knight\", or \"bishop\" to promote your pawn.\n";
 	private final String boardDetails = "\n\nEach square is identified by a column letter (shown at the top and bottom \n"
@@ -42,7 +43,8 @@ public class TextUI extends UserInterface {
 	public TextUI() {
 		super();
 		// initialize the StringBuilder representation of the board
-		boardString = new StringBuilder(header + duplicate(separator + row, 8) + separator + header);
+		boardString = new StringBuilder(
+				header + duplicate(separator + row, 8) + separator + header);
 
 		// fix the line numbers in the board string
 		for (int i = 1; i <= 8; i++) {
@@ -54,8 +56,7 @@ public class TextUI extends UserInterface {
 	}
 
 	/**
-	 * This method merges a number of copies of the given String into a single
-	 * String.
+	 * This method merges a number of copies of the given String into a single String.
 	 * 
 	 * @param str the String to duplicate
 	 * @param n   the number of times to duplicate the String
@@ -152,8 +153,8 @@ public class TextUI extends UserInterface {
 				String currentPlayer = blackToMove ? "Black" : "White";
 				String otherPlayer = blackToMove ? "White" : "Black";
 				while (true) {
-					System.out.println(currentPlayer + " has offered to end the game in a draw. " + otherPlayer
-							+ ", do you accept? Enter \"yes\" or \"no\".");
+					System.out.println(currentPlayer + " has offered to end the game in a draw. "
+							+ otherPlayer + ", do you accept? Enter \"yes\" or \"no\".");
 					input = in.nextLine().toLowerCase();
 					if (input.equals("yes")) {
 						mediator.handleSelectedOption(Mediator.DRAW);

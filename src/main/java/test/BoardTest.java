@@ -107,10 +107,10 @@ class BoardTest {
 		// starting
 		// position
 		byte[][] array = new byte[8][8];
-		byte[] firstRow = { (byte) 'R', (byte) 'N', (byte) 'B', (byte) 'Q', (byte) 'K', (byte) 'B', (byte) 'N',
-				(byte) 'R' };
-		byte[] lastRow = { (byte) 'r', (byte) 'n', (byte) 'b', (byte) 'q', (byte) 'k', (byte) 'b', (byte) 'n',
-				(byte) 'r' };
+		byte[] firstRow = { (byte) 'R', (byte) 'N', (byte) 'B', (byte) 'Q', (byte) 'K', (byte) 'B',
+				(byte) 'N', (byte) 'R' };
+		byte[] lastRow = { (byte) 'r', (byte) 'n', (byte) 'b', (byte) 'q', (byte) 'k', (byte) 'b',
+				(byte) 'n', (byte) 'r' };
 		array[0] = firstRow;
 		array[7] = lastRow;
 		for (int i = 0; i < 8; i++) {
@@ -153,8 +153,8 @@ class BoardTest {
 	}
 
 	/**
-	 * This method executes a move specified by the names of the start and stop
-	 * squares and the current player's color
+	 * This method executes a move specified by the names of the start and stop squares and the
+	 * current player's color
 	 * 
 	 * @param start       the name of the square where the piece starts
 	 * @param stop        the name of the square where the piece stops
@@ -243,8 +243,8 @@ class BoardTest {
 	}
 
 	/**
-	 * This method creates a new board containing only two kings and four rooks in
-	 * their starting positions.
+	 * This method creates a new board containing only two kings and four rooks in their starting
+	 * positions.
 	 */
 	void setUpCastle() {
 		ChessPiece[][] pieces = new ChessPiece[8][8];
@@ -300,7 +300,8 @@ class BoardTest {
 		// verify board state after each move
 		move("a1", "a2", false);
 		move("a2", "a1", false);
-		BoardState state = new BoardState(board.toByteArray(), true, false, true, true, true, false);
+		BoardState state = new BoardState(board.toByteArray(), true, false, true, true, true,
+				false);
 		assertEquals(state, board.getBoardState(true));
 		assertEquals(board.handleSelectedSquare(7, 4, false), Board.SELECT);
 		assertEquals(board.handleSelectedSquare(7, 2, false), Board.FAILURE);

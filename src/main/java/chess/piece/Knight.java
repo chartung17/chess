@@ -23,7 +23,8 @@ public class Knight extends ChessPiece {
 	protected int move(int row, int col, byte[][] board, boolean isOccupied) {
 		// any move either one square horizontally and two vertically or one square
 		// vertically and two horizontally is valid
-		if ((row != this.row) && (col != this.col) && ((Math.abs(row - this.row) + Math.abs(col - this.col)) == 3)) {
+		if ((row != this.row) && (col != this.col)
+				&& ((Math.abs(row - this.row) + Math.abs(col - this.col)) == 3)) {
 			this.row = row;
 			this.col = col;
 			return 1;
@@ -45,7 +46,8 @@ public class Knight extends ChessPiece {
 	@Override
 	public List<int[]> legalMoves(byte[][] board) {
 		List<int[]> moves = new ArrayList<>();
-		int[][] deltas = { { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 }, { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 } };
+		int[][] deltas = { { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 }, { 2, 1 }, { 2, -1 },
+				{ -2, 1 }, { -2, -1 } };
 		for (int[] delta : deltas) {
 			if (!isInBounds(row + delta[0], col + delta[1]))
 				continue;

@@ -26,8 +26,8 @@ public class BoardPanel extends JPanel implements MouseListener {
 	public static final int BORDER_SIZE = 15;
 	public static final int SQUARE_SIZE = BOARD_SIZE / 8;
 	private static final Color MOVE_COLOR = new Color(255, 255, 0, 200); // transparent yellow
-	private BufferedImage image = new BufferedImage(BOARD_SIZE + 2 * BORDER_SIZE, BOARD_SIZE + 2 * BORDER_SIZE,
-			BufferedImage.TYPE_INT_ARGB);
+	private BufferedImage image = new BufferedImage(BOARD_SIZE + 2 * BORDER_SIZE,
+			BOARD_SIZE + 2 * BORDER_SIZE, BufferedImage.TYPE_INT_ARGB);
 	public static final Font PIECE_FONT = new Font(Font.MONOSPACED, Font.BOLD, 60);
 	private byte[][] board = new byte[8][8];
 	private Mediator mediator;
@@ -84,7 +84,8 @@ public class BoardPanel extends JPanel implements MouseListener {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				g.setColor(((i + j) % 2 == 0) ? Color.WHITE : Color.DARK_GRAY);
-				g.fillRect(SQUARE_SIZE * j + BORDER_SIZE, SQUARE_SIZE * i + BORDER_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+				g.fillRect(SQUARE_SIZE * j + BORDER_SIZE, SQUARE_SIZE * i + BORDER_SIZE,
+						SQUARE_SIZE, SQUARE_SIZE);
 			}
 		}
 
@@ -103,8 +104,7 @@ public class BoardPanel extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * This method highlights the selected piece and any squares to which it can
-	 * legally move.
+	 * This method highlights the selected piece and any squares to which it can legally move.
 	 * 
 	 * @param moves the legal moves of the selected piece
 	 * @param g     the graphics on which to draw
@@ -112,8 +112,8 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private void drawLegalMoves(List<int[]> moves, Graphics g) {
 		for (int[] move : moves) {
 			g.setColor(MOVE_COLOR);
-			g.fillRect(SQUARE_SIZE * move[1] + BORDER_SIZE, SQUARE_SIZE * move[0] + BORDER_SIZE, SQUARE_SIZE,
-					SQUARE_SIZE);
+			g.fillRect(SQUARE_SIZE * move[1] + BORDER_SIZE, SQUARE_SIZE * move[0] + BORDER_SIZE,
+					SQUARE_SIZE, SQUARE_SIZE);
 		}
 	}
 
@@ -179,9 +179,10 @@ public class BoardPanel extends JPanel implements MouseListener {
 						pieceChar = '\u2657';
 					}
 					try {
-						BufferedImage pieceImage = ImageIO.read(getClass().getResourceAsStream(filename));
-						g.drawImage(pieceImage, SQUARE_SIZE * j + BORDER_SIZE + 7, SQUARE_SIZE * i + BORDER_SIZE + 7,
-								60, 60, null);
+						BufferedImage pieceImage = ImageIO
+								.read(getClass().getResourceAsStream(filename));
+						g.drawImage(pieceImage, SQUARE_SIZE * j + BORDER_SIZE + 7,
+								SQUARE_SIZE * i + BORDER_SIZE + 7, 60, 60, null);
 					} catch (IOException e) {
 						g.setColor(Character.isUpperCase(piece) ? Color.BLACK : Color.LIGHT_GRAY);
 //						g.drawString("" + Character.toUpperCase(piece), SQUARE_SIZE * j + BORDER_SIZE + 10,

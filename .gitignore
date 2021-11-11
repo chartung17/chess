@@ -6,3 +6,5 @@ build
 build.xml
 *.log
 manifest.mf
+target
+bin

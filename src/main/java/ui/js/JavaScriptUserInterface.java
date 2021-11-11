@@ -20,16 +20,16 @@ public class JavaScriptUserInterface extends UserInterface {
 	private int[] selectedSquare = null;
 	private boolean handlingButton = false;
 	private String oldMessageLine1, oldMessageLine2;
-	private long session;
+	private int session;
 	private static Random random = new Random();
-	private static Map<Long, JavaScriptUserInterface> map = new HashMap<>();
+	private static Map<Integer, JavaScriptUserInterface> map = new HashMap<>();
 	private static final String ILLEGAL = "{\"status\":405,\"message\":\"Illegal move\"}";
 	private static final String DEFAULT = "[\"Resign\",\"Offer Draw\"]";
 	private static final String YES_NO = "[\"Yes\",\"No\"]";
 	private static final String PLAY_AGAIN = "[\"Play Again\"]";
 	private static final String PROMOTION = "[\"Queen\",\"Rook\",\"Knight\",\"Bishop\"";
 
-	public JavaScriptUserInterface(long session) {
+	public JavaScriptUserInterface(int session) {
 		this.session = session;
 	}
 
@@ -50,7 +50,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	 * @param session the session to use
 	 * @return the user interface associated with the session
 	 */
-	private static JavaScriptUserInterface getUI(long session) {
+	private static JavaScriptUserInterface getUI(int session) {
 		JavaScriptUserInterface ui = map.get(session);
 		if (ui == null) {
 			ui = new JavaScriptUserInterface(session);
@@ -69,9 +69,9 @@ public class JavaScriptUserInterface extends UserInterface {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String initialize() {
-		long session;
+		int session;
 		do {
-			session = random.nextLong();
+			session = random.nextInt();
 		} while (session < 0);
 		return getUI(session).returnJson();
 	}
@@ -86,7 +86,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	 */
 	@RequestMapping(value = "/button/{session:[\\\\d]+}/{buttontext}", method = RequestMethod.GET)
 	@CrossOrigin
-	public static String handleButton(@PathVariable String buttontext, @PathVariable long session) {
+	public static String handleButton(@PathVariable String buttontext, @PathVariable int session) {
 		return getUI(session).handleButton(buttontext);
 	}
 
@@ -200,7 +200,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	@RequestMapping(value = "/square/{session:[\\d]+}/{row:[\\\\d]+}/{col:[\\\\d]+}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
-			@PathVariable long session) {
+			@PathVariable int session) {
 		JavaScriptUserInterface ui = getUI(session);
 		if (ui.handlingButton || (row < 0) || (row >= 8) || (col < 0) || (col >= 8))
 			return ILLEGAL;

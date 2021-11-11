@@ -40,7 +40,15 @@ public class JavaScriptUserInterface extends UserInterface {
 			HttpSession session) {
 		JavaScriptUserInterface ui = getUI(session);
 		ui.mediator.handleSelectedSquare(row, col);
-		System.out.println(ui.board);
+		StringBuilder sb = new StringBuilder("\n");
+		for (int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				sb.append((char) ui.board[i][j]);
+				sb.append(' ');
+			}
+			sb.append('\n');
+		}
+		System.out.println(sb);
 		return "{\"status\":200,\"message\":\"success\"}";
 	}
 

@@ -44,7 +44,7 @@ public class JavaScriptUserInterface extends UserInterface {
 		return ui;
 	}
 
-	@RequestMapping(value = "/button/buttontext", method = RequestMethod.GET)
+	@RequestMapping(value = "/button/{buttontext}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleButton(@PathVariable String buttontext, HttpSession session) {
 		return getUI(session).handleButton(buttontext);

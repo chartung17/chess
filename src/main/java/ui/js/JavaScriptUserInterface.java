@@ -33,6 +33,9 @@ public class JavaScriptUserInterface extends UserInterface {
 		this.session = session;
 	}
 
+	public JavaScriptUserInterface() {
+	}
+
 	@Override
 	protected void updateBoard(byte[][] board) {
 		this.board = board;

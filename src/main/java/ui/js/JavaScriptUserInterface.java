@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import chess.Board;
+import main.Mediator;
 import ui.UserInterface;
 
 import java.util.List;
@@ -17,9 +18,11 @@ public class JavaScriptUserInterface extends UserInterface {
 	private byte[][] board = new byte[8][8];
 	private int[] selectedSquare = null;
 	private boolean handlingButton = false;
+	private String oldMessageLine1, oldMessageLine2;
 	private static final String ILLEGAL = "{\"status\":405,\"message\":\"Illegal move\"}";
 	private static final String DEFAULT = "[\"Resign\",\"Offer Draw\"]";
 	private static final String YES_NO = "[\"Yes\",\"No\"]";
+	private static final String PLAY_AGAIN = "[\"Play Again\"]";
 	private static final String PROMOTION = "[\"Queen\",\"Rook\",\"Knight\",\"Bishop\"";
 
 	@Override
@@ -41,6 +44,103 @@ public class JavaScriptUserInterface extends UserInterface {
 		return ui;
 	}
 
+	@RequestMapping(value = "/button/buttontext", method = RequestMethod.GET)
+	@CrossOrigin
+	public static String handleButton(@PathVariable String buttontext, HttpSession session) {
+		return getUI(session).handleButton(buttontext);
+	}
+
+	private String setButtonState() {
+		if (isPromotion) {
+			return PROMOTION;
+		} else if (handlingButton) {
+			return YES_NO;
+		} else if (isGameOver) {
+			return PLAY_AGAIN;
+		} else {
+			return DEFAULT;
+		}
+	}
+
+	private String handleButton(String buttontext) {
+		String buttons = setButtonState();
+		switch (buttontext) {
+		case "Offer Draw":
+			if (buttons != DEFAULT)
+				return ILLEGAL;
+			String currentPlayer = blackToMove ? "Black" : "White";
+			String otherPlayer = blackToMove ? "White" : "Black";
+			handlingButton = true;
+			oldMessageLine1 = messageLine1;
+			oldMessageLine2 = messageLine2;
+			messageLine1 = "";
+			messageLine2 = currentPlayer + " has offered to end the game in a draw. " + otherPlayer
+					+ ", do you accept?";
+			break;
+		case "Resign":
+			if (buttons != DEFAULT)
+				return ILLEGAL;
+			handlingButton = true;
+			oldMessageLine1 = messageLine1;
+			oldMessageLine2 = messageLine2;
+			messageLine1 = "";
+			messageLine2 = (blackToMove ? "Black" : "White") + ", are you sure you want to resign?";
+			break;
+		case "Queen":
+			if (buttons != PROMOTION)
+				return ILLEGAL;
+			handlingButton = false;
+			selectedSquare = null;
+			mediator.handleSelectedOption(Mediator.QUEEN);
+			break;
+		case "Rook":
+			if (buttons != PROMOTION)
+				return ILLEGAL;
+			handlingButton = false;
+			selectedSquare = null;
+			mediator.handleSelectedOption(Mediator.ROOK);
+			break;
+		case "Knight":
+			if (buttons != PROMOTION)
+				return ILLEGAL;
+			handlingButton = false;
+			selectedSquare = null;
+			mediator.handleSelectedOption(Mediator.KNIGHT);
+			break;
+		case "Bishop":
+			if (buttons != PROMOTION)
+				return ILLEGAL;
+			handlingButton = false;
+			selectedSquare = null;
+			mediator.handleSelectedOption(Mediator.BISHOP);
+			break;
+		case "Yes":
+			if (buttons != YES_NO)
+				return ILLEGAL;
+			if (messageLine2.contains("resign")) 
+				mediator.handleSelectedOption(Mediator.RESIGN);
+			else 
+				mediator.handleSelectedOption(Mediator.DRAW);
+			break;
+		case "No":
+			if (buttons != YES_NO)
+				return ILLEGAL;
+			handlingButton = false;
+			messageLine1 = oldMessageLine1;
+			messageLine2 = oldMessageLine2;
+			break;
+		case "Play Again":
+			if (buttons != PLAY_AGAIN)
+				return ILLEGAL;
+			mediator.initializeGame();
+			mediator.start();
+			break;
+		default:
+			return ILLEGAL;
+		}
+		return returnJson();
+	}
+
 	@RequestMapping(value = "/square/{row:[\\d]+}/{col:[\\d]+}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
@@ -54,10 +154,14 @@ public class JavaScriptUserInterface extends UserInterface {
 		} else {
 			ui.selectedSquare = null;
 		}
+		return ui.returnJson();
+	}
+	
+	private String returnJson() {
 		StringBuilder boardStr = new StringBuilder();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				char c = ui.board[i][j] == 0 ? '0' : (char) ui.board[i][j];
+				char c = board[i][j] == 0 ? '0' : (char) board[i][j];
 				boardStr.append(c);
 			}
 		}
@@ -65,25 +169,18 @@ public class JavaScriptUserInterface extends UserInterface {
 		for (int i = 0; i < 64; i++) {
 			movesStr.append('0');
 		}
-		if (ui.selectedSquare != null) {
-			List<int[]> moves = ui.mediator.getLegalMoves(ui.selectedSquare[0],
-					ui.selectedSquare[1]);
-			moves.add(new int[] { ui.selectedSquare[0], ui.selectedSquare[1] });
+		if (selectedSquare != null) {
+			List<int[]> moves = mediator.getLegalMoves(selectedSquare[0],
+					selectedSquare[1]);
+			moves.add(new int[] { selectedSquare[0], selectedSquare[1] });
 			for (int[] move : moves) {
 				movesStr.setCharAt(8 * move[0] + move[1], 'X');
 			}
 		}
-		String buttons;
-		if (ui.isPromotion) {
-			buttons = PROMOTION;
-		} else if (ui.isGameOver || ui.handlingButton) {
-			buttons = YES_NO;
-		} else {
-			buttons = DEFAULT;
-		}
+		String buttons = setButtonState();
 		return "{\"status\":200,\"board\":\"" + boardStr.toString() + "\",\"moves\":\""
-				+ movesStr.toString() + "\",\"message1\":" + ui.messageLine1 + "\",\"message2\":"
-				+ ui.messageLine2 + "\",\"buttons\":" + buttons + "}";
+				+ movesStr.toString() + "\",\"message1\":\"" + messageLine1
+				+ "\",\"message2\":\"" + messageLine2 + "\",\"buttons\":" + buttons + "}";
 	}
 
 	public static void main(String[] args) {

@@ -117,6 +117,7 @@ public class JavaScriptUserInterface extends UserInterface {
 		case "yes":
 			if (buttons != YES_NO)
 				return ILLEGAL;
+			handlingButton = false;
 			if (messageLine2.contains("resign")) 
 				mediator.handleSelectedOption(Mediator.RESIGN);
 			else 

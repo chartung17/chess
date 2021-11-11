@@ -65,7 +65,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	private String handleButton(String buttontext) {
 		String buttons = setButtonState();
 		switch (buttontext) {
-		case "Offer Draw":
+		case "draw":
 			if (buttons != DEFAULT)
 				return ILLEGAL;
 			String currentPlayer = blackToMove ? "Black" : "White";
@@ -77,7 +77,7 @@ public class JavaScriptUserInterface extends UserInterface {
 			messageLine2 = currentPlayer + " has offered to end the game in a draw. " + otherPlayer
 					+ ", do you accept?";
 			break;
-		case "Resign":
+		case "resign":
 			if (buttons != DEFAULT)
 				return ILLEGAL;
 			handlingButton = true;
@@ -86,35 +86,35 @@ public class JavaScriptUserInterface extends UserInterface {
 			messageLine1 = "";
 			messageLine2 = (blackToMove ? "Black" : "White") + ", are you sure you want to resign?";
 			break;
-		case "Queen":
+		case "queen":
 			if (buttons != PROMOTION)
 				return ILLEGAL;
 			handlingButton = false;
 			selectedSquare = null;
 			mediator.handleSelectedOption(Mediator.QUEEN);
 			break;
-		case "Rook":
+		case "rook":
 			if (buttons != PROMOTION)
 				return ILLEGAL;
 			handlingButton = false;
 			selectedSquare = null;
 			mediator.handleSelectedOption(Mediator.ROOK);
 			break;
-		case "Knight":
+		case "knight":
 			if (buttons != PROMOTION)
 				return ILLEGAL;
 			handlingButton = false;
 			selectedSquare = null;
 			mediator.handleSelectedOption(Mediator.KNIGHT);
 			break;
-		case "Bishop":
+		case "bishop":
 			if (buttons != PROMOTION)
 				return ILLEGAL;
 			handlingButton = false;
 			selectedSquare = null;
 			mediator.handleSelectedOption(Mediator.BISHOP);
 			break;
-		case "Yes":
+		case "yes":
 			if (buttons != YES_NO)
 				return ILLEGAL;
 			if (messageLine2.contains("resign")) 
@@ -122,14 +122,14 @@ public class JavaScriptUserInterface extends UserInterface {
 			else 
 				mediator.handleSelectedOption(Mediator.DRAW);
 			break;
-		case "No":
+		case "no":
 			if (buttons != YES_NO)
 				return ILLEGAL;
 			handlingButton = false;
 			messageLine1 = oldMessageLine1;
 			messageLine2 = oldMessageLine2;
 			break;
-		case "Play Again":
+		case "new":
 			if (buttons != PLAY_AGAIN)
 				return ILLEGAL;
 			mediator.initializeGame();

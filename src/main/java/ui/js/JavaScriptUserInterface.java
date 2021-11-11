@@ -8,9 +8,10 @@ import chess.Board;
 import main.Mediator;
 import ui.UserInterface;
 
+import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
+import java.util.Map;
+import java.util.Random;
 
 @RestController
 @SpringBootApplication
@@ -19,11 +20,18 @@ public class JavaScriptUserInterface extends UserInterface {
 	private int[] selectedSquare = null;
 	private boolean handlingButton = false;
 	private String oldMessageLine1, oldMessageLine2;
+	private long session;
+	private static Random random = new Random();
+	private static Map<Long, JavaScriptUserInterface> map = new HashMap<>();
 	private static final String ILLEGAL = "{\"status\":405,\"message\":\"Illegal move\"}";
 	private static final String DEFAULT = "[\"Resign\",\"Offer Draw\"]";
 	private static final String YES_NO = "[\"Yes\",\"No\"]";
 	private static final String PLAY_AGAIN = "[\"Play Again\"]";
 	private static final String PROMOTION = "[\"Queen\",\"Rook\",\"Knight\",\"Bishop\"";
+
+	public JavaScriptUserInterface(long session) {
+		this.session = session;
+	}
 
 	@Override
 	protected void updateBoard(byte[][] board) {
@@ -42,13 +50,30 @@ public class JavaScriptUserInterface extends UserInterface {
 	 * @param session the session to use
 	 * @return the user interface associated with the session
 	 */
-	private static JavaScriptUserInterface getUI(HttpSession session) {
-		JavaScriptUserInterface ui = (JavaScriptUserInterface) session.getAttribute("ui");
+	private static JavaScriptUserInterface getUI(long session) {
+		JavaScriptUserInterface ui = map.get(session);
 		if (ui == null) {
-			ui = new JavaScriptUserInterface();
-			session.setAttribute("ui", ui);
+			ui = new JavaScriptUserInterface(session);
+			map.put(session, ui);
 		}
 		return ui;
+	}
+
+	/**
+	 * This method initializes a user interface for the given session if it does not yet have an
+	 * associated user interface, and it returns a JSON representation of the game state.
+	 * 
+	 * @param session the current session
+	 * @return a JSON representation of the game state
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@CrossOrigin
+	public static String initialize() {
+		long session;
+		do {
+			session = random.nextLong();
+		} while (session < 0);
+		return getUI(session).returnJson();
 	}
 
 	/**
@@ -59,9 +84,9 @@ public class JavaScriptUserInterface extends UserInterface {
 	 * @param session    the current session
 	 * @return the state of the board after handling the button click
 	 */
-	@RequestMapping(value = "/button/{buttontext}", method = RequestMethod.GET)
+	@RequestMapping(value = "/button/{session:[\\\\d]+}/{buttontext}", method = RequestMethod.GET)
 	@CrossOrigin
-	public static String handleButton(@PathVariable String buttontext, HttpSession session) {
+	public static String handleButton(@PathVariable String buttontext, @PathVariable long session) {
 		return getUI(session).handleButton(buttontext);
 	}
 
@@ -172,10 +197,10 @@ public class JavaScriptUserInterface extends UserInterface {
 	 * @param session the current session
 	 * @return the state of the board after handling the click
 	 */
-	@RequestMapping(value = "/square/{row:[\\d]+}/{col:[\\d]+}", method = RequestMethod.GET)
+	@RequestMapping(value = "/square/{session:[\\d]+}/{row:[\\\\d]+}/{col:[\\\\d]+}", method = RequestMethod.GET)
 	@CrossOrigin
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
-			HttpSession session) {
+			@PathVariable long session) {
 		JavaScriptUserInterface ui = getUI(session);
 		if (ui.handlingButton || (row < 0) || (row >= 8) || (col < 0) || (col >= 8))
 			return ILLEGAL;
@@ -213,9 +238,9 @@ public class JavaScriptUserInterface extends UserInterface {
 			}
 		}
 		String buttons = setButtonState();
-		return "{\"status\":200,\"board\":\"" + boardStr.toString() + "\",\"moves\":\""
-				+ movesStr.toString() + "\",\"message1\":\"" + messageLine1 + "\",\"message2\":\""
-				+ messageLine2 + "\",\"buttons\":" + buttons + "}";
+		return "{\"status\":200,\"session\":" + session + ",\"board\":\"" + boardStr.toString()
+				+ "\",\"moves\":\"" + movesStr.toString() + "\",\"message1\":\"" + messageLine1
+				+ "\",\"message2\":\"" + messageLine2 + "\",\"buttons\":" + buttons + "}";
 	}
 
 	/**

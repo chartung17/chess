@@ -1,13 +1,18 @@
 .Board {
   display: grid;
-  grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px;
-  grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px;
+  grid-template-columns: repeat(8, 12.5%);
+  grid-template-rows: repeat(8, 12.5%);
   width: 600px;
   height: 600px;
   border-width: 25px;
   border-style: solid;
   border-color: slategray;
   margin: 10px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 .Message {
@@ -72,5 +77,28 @@ html, body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .Board {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+@media (max-width: 550px) {
+  .Board {
+    width: 400px;
+    height: 400px;
+    border-width: 5px;
+  }
+}
+
+@media (max-width: 410px) {
+  .Board {
+    width: 280px;
+    height: 280px;
+    border-width: 5px;
   }
 }

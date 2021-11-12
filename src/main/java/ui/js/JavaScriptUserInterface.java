@@ -31,9 +31,11 @@ public class JavaScriptUserInterface extends UserInterface {
 
 	public JavaScriptUserInterface(int session) {
 		this.session = session;
+		this.mediator.start();
 	}
 
 	public JavaScriptUserInterface() {
+		this(0);
 	}
 
 	@Override

@@ -19,6 +19,28 @@ export default class Square extends React.Component {
     let row = Math.floor(this.props.number / 8);
     let col = this.props.number % 8;
     let color = ((row + col) % 2) === 0 ? 'ghostwhite' : '#333333';
+    let image = this.getImage();
+    this.state = {
+      row: row,
+      col: col,
+      defaultColor: color,
+      color: this.props.selected ? 'yellow' : color,
+      image: image,
+      onClick: this.props.onClick
+    }
+    this.getStyle = this.getStyle.bind(this);
+    this.getImage = this.getImage.bind(this);
+  }
+
+  getStyle() {
+    return {
+      background: this.state.color,
+      border: 0,
+      box_shadow: 'none'
+    }
+  }
+
+  getImage() {
     let image = '';
     switch (this.props.char) {
       case 'B':
@@ -58,23 +80,16 @@ export default class Square extends React.Component {
       image = whiteRook;
       break;
     }
-    this.state = {
-      row: row,
-      col: col,
-      defaultColor: color,
-      color: this.props.selected ? 'yellow' : color,
-      image: image,
-      onClick: this.props.onClick
-    }
-    this.getStyle = this.getStyle.bind(this);
+    return image;
   }
 
-  getStyle() {
-    return {
-      background: this.state.color,
-      border: 0,
-      box_shadow: 'none'
+  componentDidUpdate(prevProps) {
+    if (this.props === prevProps) {
+      return;
     }
+    this.setState({
+      image: this.getImage()
+    });
   }
 
   render() {

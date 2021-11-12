@@ -24,6 +24,9 @@ export default class App extends React.Component {
       sessionID: 'error'
     }
     this.selectsquare = this.selectsquare.bind(this);
+  }
+
+  componentDidMount() {
     fetch("https://chartung17-chess.herokuapp.com/", {
       method: 'GET'
     })

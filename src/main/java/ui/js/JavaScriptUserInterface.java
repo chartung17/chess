@@ -241,6 +241,10 @@ public class JavaScriptUserInterface extends UserInterface {
 			}
 		}
 		String buttons = setButtonState();
+		if (messageLine1 == null)
+			messageLine1 = "";
+		if (messageLine2 == null)
+			messageLine2 = "";
 		return "{\"status\":200,\"session\":" + session + ",\"board\":\"" + boardStr.toString()
 				+ "\",\"moves\":\"" + movesStr.toString() + "\",\"message1\":\"" + messageLine1
 				+ "\",\"message2\":\"" + messageLine2 + "\",\"buttons\":" + buttons + "}";

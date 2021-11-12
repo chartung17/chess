@@ -7,6 +7,11 @@
   border-width: 25px;
   border-style: solid;
   border-color: slategray;
+  margin: 10px;
+}
+
+.Message {
+  margin-top: 25px;
 }
 
 p {
@@ -17,8 +22,8 @@ p {
 
 .Buttons button {
   margin: 10px;
-  width: 150px;
-  height: 30px;
+  width: 120px;
+  height: 35px;
   font-size: 20px;
   background: ghostwhite;
 }

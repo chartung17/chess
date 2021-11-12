@@ -9,6 +9,7 @@ export default class App extends React.Component {
     for (let i = 0; i < 64; i++) {
       board.push(<Square
         number={i}
+        key={i}
         char={'0'}
         selected={false}
         onClick={this.selectsquare(i)}
@@ -25,6 +26,8 @@ export default class App extends React.Component {
       sessionID: 'error'
     }
     this.selectsquare = this.selectsquare.bind(this);
+    this.handleButton = this.handleButton.bind(this);
+    this.handleResult = this.handleResult.bind(this);
   }
 
   componentDidMount() {
@@ -37,37 +40,7 @@ export default class App extends React.Component {
       // Print the error if there is one.
       console.log(err);
     }).then(result => {
-      if (result === undefined) {
-        console.log('Unknown error occured');
-      } else if (result['status'] === 200) {
-        var boardStr = result['board'];
-        var movesStr = result['moves'];
-        var message1 = result['message1'];
-        var message2 = result['message2'];
-        var buttonsStr = result['buttons'];
-        var session = result['session'];
-      }
-      let board = [];
-      for (let i = 0; i < 64; i++) {
-        board.push(<Square
-          number={i}
-          key={i}
-          char={boardStr.charAt(i)}
-          selected={movesStr.charAt(i) === 'X'}
-          onClick={this.selectsquare(i)}
-        />)
-      }
-      let buttons = buttonsStr.map(text => <button key={text} onClick={this.handleButton(text)}>{text}</button>);
-      this.setState({
-        board: board,
-        buttons: buttons,
-        message1: message1,
-        message2: message2,
-        buttonsStr: buttonsStr,
-        boardStr: boardStr,
-        movesStr: movesStr,
-        sessionID: session
-      });
+      this.handleResult(result);
     });
   }
 
@@ -82,41 +55,47 @@ export default class App extends React.Component {
         // Print the error if there is one.
         console.log(err);
       }).then(result => {
-        if (result === undefined) {
-          console.log('Unknown error occured');
-        } else if (result['status'] === 200) {
-          var boardStr = result['board'];
-          var movesStr = result['moves'];
-          var message1 = result['message1'];
-          var message2 = result['message2'];
-          var buttonsStr = result['buttons'];
-        }
-        let board = [];
-        for (let i = 0; i < 64; i++) {
-          board.push(<Square
-            number={i}
-            char={boardStr.charAt(i)}
-            selected={movesStr.charAt(i) === 'X'}
-            onClick={this.selectsquare(i)}
-          />)
-        }
-        let buttons = buttonsStr.map(text => <button key={text} onClick={this.handleButton(text)}>{text}</button>);
-        this.setState({
-          board: board,
-          buttons: buttons,
-          message1: message1,
-          message2: message2,
-          buttonsStr: buttonsStr,
-          boardStr: boardStr,
-          movesStr: movesStr
-        });
+        this.handleResult(result);
       });
     };
   }
 
+  handleResult(result) {
+    if (result === undefined) {
+      console.log('Unknown error occured');
+    } else if (result['status'] === 200) {
+      var boardStr = result['board'];
+      var movesStr = result['moves'];
+      var message1 = result['message1'];
+      var message2 = result['message2'];
+      var buttonsStr = result['buttons'];
+      var session = result['session'];
+    }
+    let board = [];
+    for (let i = 0; i < 64; i++) {
+      board.push(<Square
+        number={i}
+        key={i}
+        char={boardStr.charAt(i)}
+        selected={movesStr.charAt(i) === 'X'}
+        onClick={this.selectsquare(i)}
+      />)
+    }
+    let buttons = buttonsStr.map(text => <button key={text} onClick={this.handleButton(text)}>{text}</button>);
+    this.setState({
+      board: board,
+      buttons: buttons,
+      message1: message1,
+      message2: message2,
+      buttonsStr: buttonsStr,
+      boardStr: boardStr,
+      movesStr: movesStr,
+      sessionID: session
+    });
+  }
+
   handleButton(text) {
     return () => {
-      console.log("https://chartung17-chess.herokuapp.com/button/" + this.state.sessionID + "/" + text.toLowerCase().replace(/ /g, '_'));
       fetch("https://chartung17-chess.herokuapp.com/button/" + this.state.sessionID + "/" + text.toLowerCase().replace(/ /g, '_'), {
         method: 'GET'
       })
@@ -126,34 +105,7 @@ export default class App extends React.Component {
         // Print the error if there is one.
         console.log(err);
       }).then(result => {
-        if (result === undefined) {
-          console.log('Unknown error occured');
-        } else if (result['status'] === 200) {
-          var boardStr = result['board'];
-          var movesStr = result['moves'];
-          var message1 = result['message1'];
-          var message2 = result['message2'];
-          var buttonsStr = result['buttons'];
-        }
-        let board = [];
-        for (let i = 0; i < 64; i++) {
-          board.push(<Square
-            number={i}
-            char={boardStr.charAt(i)}
-            selected={movesStr.charAt(i) === 'X'}
-            onClick={this.selectsquare(i)}
-          />)
-        }
-        let buttons = buttonsStr.map(text => <button key={text} onClick={this.handleButton(text)}>{text}</button>);
-        this.setState({
-          board: board,
-          buttons: buttons,
-          message1: message1,
-          message2: message2,
-          buttonsStr: buttonsStr,
-          boardStr: boardStr,
-          movesStr: movesStr
-        });
+        this.handleResult(result);
       });
     };
   }

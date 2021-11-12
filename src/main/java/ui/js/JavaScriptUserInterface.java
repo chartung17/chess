@@ -27,7 +27,7 @@ public class JavaScriptUserInterface extends UserInterface {
 	private static final String DEFAULT = "[\"Resign\",\"Offer Draw\"]";
 	private static final String YES_NO = "[\"Yes\",\"No\"]";
 	private static final String PLAY_AGAIN = "[\"Play Again\"]";
-	private static final String PROMOTION = "[\"Queen\",\"Rook\",\"Knight\",\"Bishop\"";
+	private static final String PROMOTION = "[\"Queen\",\"Rook\",\"Knight\",\"Bishop\"]";
 
 	public JavaScriptUserInterface(int session) {
 		this.session = session;

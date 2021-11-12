@@ -1,13 +1,38 @@
 .Board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px 100px 100px 100px 100px;
-  width: 800px;
-  height: 800px;
+  grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px;
+  grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px;
+  width: 600px;
+  height: 600px;
+  border-width: 25px;
+  border-style: solid;
+  border-color: slategray;
+}
+
+p {
+  height: 30px;
+  margin: 5px;
+  font-size: 20px;
+}
+
+.Buttons button {
+  margin: 10px;
+  width: 150px;
+  height: 30px;
+  font-size: 20px;
+  background: ghostwhite;
+}
+
+html, body {
+  background: lightsteelblue;
+  min-height: 100%;
 }
 
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-logo {

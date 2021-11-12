@@ -24,12 +24,20 @@ export default class Square extends React.Component {
       row: row,
       col: col,
       defaultColor: color,
-      color: this.props.selected ? 'yellow' : color,
+      color: color,
       image: image,
       onClick: this.props.onClick
     }
     this.getStyle = this.getStyle.bind(this);
+    this.getColor = this.getColor.bind(this);
     this.getImage = this.getImage.bind(this);
+    this.getImageAltText = this.getImageAltText.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      color: this.getColor()
+    });
   }
 
   getStyle() {
@@ -79,8 +87,61 @@ export default class Square extends React.Component {
       case 'r':
       image = whiteRook;
       break;
+      default:
+      image = '';
+    }
+    return image === '' ? '' : <img src={image} alt={this.getImageAltText()}/>;
+  }
+
+  getImageAltText() {
+    let image = '';
+    switch (this.props.char) {
+      case 'B':
+      image = 'black bishop';
+      break;
+      case 'K':
+      image = 'black king';
+      break;
+      case 'N':
+      image = 'black knight';
+      break;
+      case 'P':
+      image = 'black pawn';
+      break;
+      case 'Q':
+      image = 'black queen';
+      break
+      case 'R':
+      image = 'black rook';
+      break;
+      case 'b':
+      image = 'white bishop';
+      break;
+      case 'k':
+      image = 'white king';
+      break;
+      case 'n':
+      image = 'white knight';
+      break;
+      case 'p':
+      image = 'white pawn';
+      break;
+      case 'q':
+      image = 'white queen';
+      break
+      case 'r':
+      image = 'white rook';
+      break;
+      default:
+      image = '';
     }
     return image;
+  }
+
+  getColor() {
+    return this.props.selected
+      ? (this.state.defaultColor.includes('white') ? 'yellow' : 'gold')
+      : this.state.defaultColor
   }
 
   componentDidUpdate(prevProps) {
@@ -88,13 +149,16 @@ export default class Square extends React.Component {
       return;
     }
     this.setState({
-      image: this.getImage()
+      image: this.getImage(),
+      color: this.getColor()
     });
   }
 
   render() {
     return (
-      <button style={this.getStyle()} onClick={this.state.onClick}><img src={this.state.image}/></button>
+      <button style={this.getStyle()} onClick={this.state.onClick}>
+      {this.state.image}
+      </button>
     );
   }
 }

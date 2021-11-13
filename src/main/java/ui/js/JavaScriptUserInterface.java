@@ -207,7 +207,8 @@ public class JavaScriptUserInterface extends UserInterface {
 	public static String handleSelectedSquare(@PathVariable int row, @PathVariable int col,
 			@PathVariable int session) {
 		JavaScriptUserInterface ui = getUI(session);
-		if (ui.handlingButton || (row < 0) || (row >= 8) || (col < 0) || (col >= 8))
+		if (ui.handlingButton || (row < 0) || (row >= 8) || (col < 0) || (col >= 8)
+				|| ui.isGameOver)
 			return ILLEGAL;
 		int result = ui.mediator.handleSelectedSquare(row, col);
 		if ((result == Board.SELECT) || (result == Board.PROMOTE)) {
